@@ -1,6 +1,8 @@
 import { ApiClient, HelixStream, HelixUser } from "@twurple/api";
 import { AppTokenAuthProvider } from "@twurple/auth";
 
+const CACHE_TTL_IN_MINUTES = Number.parseInt(process.env.CACHE_TTL_IN_MINUTES!);
+
 class TwitchApi {
   private apiClient;
   private usersCache: Map<string, HelixUser> = new Map();
@@ -56,7 +58,7 @@ class TwitchApi {
 
     if (stream) {
       this.streamCache.set(channelName, {
-        expireAt: new Date().getTime() + 1000 * 60, // 1 minute
+        expireAt: new Date().getTime() + 1000 * 60 * CACHE_TTL_IN_MINUTES,
         stream,
       });
     }

@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const CACHE_TTL_IN_MINUTES = Number.parseInt(process.env.CACHE_TTL_IN_MINUTES!);
+
 export type KickChannel = { stream: { viewer_count: number } };
 
 class KickApi {
@@ -83,7 +85,7 @@ class KickApi {
     const stream = response.data[0].stream;
 
     this.streamCache.set(slug, {
-      expireAt: new Date().getTime() + 1000 * 60, // 1 minute
+      expireAt: new Date().getTime() + 1000 * 60 * CACHE_TTL_IN_MINUTES,
       stream,
     });
 

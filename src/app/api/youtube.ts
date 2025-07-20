@@ -1,5 +1,7 @@
 import { google, youtube_v3 } from "googleapis";
 
+const CACHE_TTL_IN_MINUTES = Number.parseInt(process.env.CACHE_TTL_IN_MINUTES!);
+
 class YoutubeApi {
   private apiClient: youtube_v3.Youtube;
   private streamCache: Map<
@@ -24,7 +26,7 @@ class YoutubeApi {
     const streamCache = this.streamCache.get(videoId);
 
     if (streamCache && streamCache.expireAt > new Date().getTime()) {
-      console.info(`[TwitchApi]: stream from channel '${videoId}' from cache`);
+      console.info(`[YouTubeApi]: stream from channel '${videoId}' from cache`);
       return streamCache.stream;
     }
 
@@ -37,7 +39,7 @@ class YoutubeApi {
 
     if (stream) {
       this.streamCache.set(videoId, {
-        expireAt: new Date().getTime() + 1000 * 60, // 1 minute
+        expireAt: new Date().getTime() + 1000 * 60 * CACHE_TTL_IN_MINUTES,
         stream,
       });
     }
