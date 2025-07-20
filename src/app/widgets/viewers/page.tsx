@@ -1,11 +1,11 @@
-import { twitchApi } from "@/app/api/twitch";
+import { twitchApi, youtubeApi } from "@/app/api";
 import { Icons } from "@/app/icons";
 import { SearchParams } from "@/app/types";
 import { z } from "zod";
 
 const ICON_SIZE = 32;
 
-// http://localhost:3000/widgets/viewers?y=gaules&t=gaules&k=gaules&c=0101017f&f=russo%20one
+// http://localhost:3000/widgets/viewers?y=w1wx7riotD4&t=gaules&k=gaules&c=0101017f&f=russo%20one
 
 const paramsScheme = z.object({
   y: z.string(), // youtube channel
@@ -45,6 +45,14 @@ export default async function ViewersWidget({ searchParams }: Props) {
     twitchStream = { viewers: -1 };
   }
 
+  let youtubeStream;
+
+  try {
+    youtubeStream = params.y ? await youtubeApi.getStream(params.y) : null;
+  } catch {
+    youtubeStream = { liveStreamingDetails: { concurrentViewers: -1 } };
+  }
+
   return (
     <main className="flex flex-row justify-between">
       <Counter
@@ -59,11 +67,13 @@ export default async function ViewersWidget({ searchParams }: Props) {
           style={counterStyle}
         />
       )}
-      <Counter
-        icon={<Icons.youtube width={ICON_SIZE} height={ICON_SIZE} />}
-        viewers={2060}
-        style={counterStyle}
-      />
+      {params.y && (
+        <Counter
+          icon={<Icons.youtube width={ICON_SIZE} height={ICON_SIZE} />}
+          viewers={youtubeStream?.liveStreamingDetails?.concurrentViewers || 0}
+          style={counterStyle}
+        />
+      )}
     </main>
   );
 }
@@ -74,7 +84,7 @@ const Counter = ({
   style,
 }: {
   icon: React.ReactNode;
-  viewers: number;
+  viewers: number | string;
   style: {
     fontFamily: string;
   };

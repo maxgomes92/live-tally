@@ -23,7 +23,7 @@ class TwitchApi {
     const userCache = this.usersCache.get(channelName);
 
     if (userCache) {
-      console.warn(`[TwitchApi]: user from channel '${channelName}' from cache`);
+      console.info(`[TwitchApi]: user from channel '${channelName}' from cache`);
     }
 
     const user =
@@ -46,7 +46,7 @@ class TwitchApi {
     const streamCache = this.streamCache.get(channelName);
 
     if (streamCache && streamCache.expireAt > new Date().getTime()) {
-      console.warn(
+      console.info(
         `[TwitchApi]: stream from channel '${channelName}' from cache`,
       );
       return streamCache.stream;
