@@ -1,4 +1,4 @@
-import { twitchApi, youtubeApi } from "@/app/api";
+import { kickApi, twitchApi, youtubeApi } from "@/app/api";
 import { Icons } from "@/app/icons";
 import { SearchParams } from "@/app/types";
 import { z } from "zod";
@@ -53,13 +53,23 @@ export default async function ViewersWidget({ searchParams }: Props) {
     youtubeStream = { liveStreamingDetails: { concurrentViewers: -1 } };
   }
 
+  let kickStream;
+
+  try {
+    kickStream = params.y ? await kickApi.getStream(params.k) : null;
+  } catch {
+    kickStream = { viewer_count: -1 };
+  }
+
   return (
     <main className="flex flex-row justify-between">
-      <Counter
-        icon={<Icons.kick width={ICON_SIZE} height={ICON_SIZE} />}
-        viewers={1810}
-        style={counterStyle}
-      />
+      {params.k && (
+        <Counter
+          icon={<Icons.kick width={ICON_SIZE} height={ICON_SIZE} />}
+          viewers={kickStream?.viewer_count || 0}
+          style={counterStyle}
+        />
+      )}
       {params.t && (
         <Counter
           icon={<Icons.twitch width={ICON_SIZE} height={ICON_SIZE} />}

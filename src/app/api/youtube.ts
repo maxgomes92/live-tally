@@ -1,8 +1,8 @@
 import { google, youtube_v3 } from "googleapis";
 
 class YoutubeApi {
-  apiClient: youtube_v3.Youtube;
-  streamCache: Map<
+  private apiClient: youtube_v3.Youtube;
+  private streamCache: Map<
     string,
     { stream: youtube_v3.Schema$Video; expireAt: number }
   > = new Map();

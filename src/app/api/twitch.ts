@@ -2,9 +2,9 @@ import { ApiClient, HelixStream, HelixUser } from "@twurple/api";
 import { AppTokenAuthProvider } from "@twurple/auth";
 
 class TwitchApi {
-  apiClient;
-  usersCache: Map<string, HelixUser> = new Map();
-  streamCache: Map<string, { stream: HelixStream; expireAt: number }> =
+  private apiClient;
+  private usersCache: Map<string, HelixUser> = new Map();
+  private streamCache: Map<string, { stream: HelixStream; expireAt: number }> =
     new Map();
 
   constructor() {
@@ -19,19 +19,19 @@ class TwitchApi {
     this.apiClient = new ApiClient({ authProvider });
   }
 
-  async getUser(channelName: string) {
-    const userCache = this.usersCache.get(channelName);
+  private async getUser(slug: string) {
+    const userCache = this.usersCache.get(slug);
 
     if (userCache) {
-      console.info(`[TwitchApi]: user from channel '${channelName}' from cache`);
+      console.info(`[TwitchApi]: user from channel '${slug}' from cache`);
     }
 
     const user =
-      userCache ?? (await this.apiClient.users.getUserByName(channelName));
+      userCache ?? (await this.apiClient.users.getUserByName(slug));
 
     if (!user) return null;
 
-    this.usersCache.set(channelName, user);
+    this.usersCache.set(slug, user);
 
     return user;
   }
