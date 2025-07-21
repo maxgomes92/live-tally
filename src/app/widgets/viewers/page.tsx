@@ -1,6 +1,9 @@
 import { kickApi, twitchApi, youtubeApi } from "@/app/api";
+import { Counter } from "@/app/components/counter";
+import { PlatformsIconCombo } from "@/app/components/platforms-icon-combo";
 import { Icons } from "@/app/icons";
 import { SearchParams } from "@/app/types";
+import { fontFamilyList } from "@/app/utils/constants";
 import { z } from "zod";
 
 const ICON_SIZE = 32;
@@ -8,23 +11,12 @@ const ICON_SIZE = 32;
 // http://localhost:3000/widgets/viewers?y=w1wx7riotD4&t=gaules&k=gaules&c=0101017f&f=russo%20one&g=1
 
 const paramsScheme = z.object({
-  y: z.string(), // youtube channel
-  t: z.string(), // twitch channel
-  k: z.string(), // kick channel
-  c: z.string(), // color
-  f: z.enum([
-    "arial",
-    "times new roman",
-    "brush script mt",
-    "copperplate",
-    "helvética",
-    "verdana",
-    "georgia",
-    "decorative",
-    "impact",
-    "teko",
-    "russo one",
-  ]), // font-family
+  y: z.string().optional(), // youtube channel
+  t: z.string().optional(), // twitch channel
+  k: z.string().optional(), // kick channel
+  c: z.string().optional(), // color
+  bg: z.string().optional(), // background color
+  f: z.enum(fontFamilyList), // font-family
   g: z.enum(["0", "1"]), // group all viewers
 });
 
@@ -36,6 +28,8 @@ export default async function ViewersWidget({ searchParams }: Props) {
   const params = paramsScheme.parse(await searchParams);
   const counterStyle = {
     fontFamily: params.f,
+    backgroundColor: params.bg,
+    color: params.c,
   };
 
   let twitchStream;
@@ -57,7 +51,7 @@ export default async function ViewersWidget({ searchParams }: Props) {
   let kickStream;
 
   try {
-    kickStream = params.y ? await kickApi.getStream(params.k) : null;
+    kickStream = params.k ? await kickApi.getStream(params.k) : null;
   } catch {
     kickStream = { viewer_count: -1 };
   }
@@ -76,23 +70,11 @@ export default async function ViewersWidget({ searchParams }: Props) {
       {params.g === "1" ? (
         <Counter
           icon={
-            <div className="flex flex-row gap-0.5">
-              {params.k && (
-                <div className="shrink-0 m-auto">
-                  <Icons.kick width={24} height={24} />
-                </div>
-              )}
-              {params.t && (
-                <div className="shrink-0 m-auto translate-y-0.5">
-                  <Icons.twitch width={28} height={28} />
-                </div>
-              )}
-              {params.y && (
-                <div className="shrink-0">
-                  <Icons.youtube width={ICON_SIZE} height={ICON_SIZE} />
-                </div>
-              )}
-            </div>
+            <PlatformsIconCombo
+              kick={!!params.k}
+              youtube={!!params.y}
+              twitch={!!params.t}
+            />
           }
           viewers={totalOfViewers}
           style={counterStyle}
@@ -127,30 +109,3 @@ export default async function ViewersWidget({ searchParams }: Props) {
     </main>
   );
 }
-
-const Counter = ({
-  icon,
-  viewers,
-  style,
-}: {
-  icon: React.ReactNode;
-  viewers: number | string;
-  style: {
-    fontFamily: string;
-  };
-}) => (
-  <div
-    className="flex flex-row flex-wrap items-center gap-2 px-3 py-2 text-3xl"
-    style={{
-      backgroundColor: "rgba(1, 1, 1, 0.6)",
-      color: "white",
-      fontWeight: "bold",
-      borderRadius: 14,
-      fontFamily: style.fontFamily,
-    }}
-  >
-    {icon}
-
-    <h1>{viewers}</h1>
-  </div>
-);

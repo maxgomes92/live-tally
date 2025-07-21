@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.2.0",
+    "@mui/material": "^7.2.0",
     "@twurple/api": "^7.3.0",
     "@twurple/auth": "^7.3.0",
     "axios": "^1.10.0",
     "googleapis": "^153.0.0",
     "next": "15.4.2",
     "react": "19.1.0",
+    "react-colorful": "^5.6.1",
     "react-dom": "19.1.0",
     "zod": "^4.0.5"
   },
