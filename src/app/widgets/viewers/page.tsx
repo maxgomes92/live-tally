@@ -3,7 +3,7 @@ import { Counter } from "@/app/components/counter";
 import { PlatformsIconCombo } from "@/app/components/platforms-icon-combo";
 import { Icons } from "@/app/icons";
 import { SearchParams } from "@/app/types";
-import { fontFamilyList } from "@/app/utils/constants";
+import { fontFamilyList, isNumeric } from "@/app/utils/constants";
 import { z } from "zod";
 
 const ICON_SIZE = 32;
@@ -59,7 +59,7 @@ export default async function ViewersWidget({ searchParams }: Props) {
   const totalOfViewers =
     (kickStream?.viewer_count || 0) +
     (twitchStream?.viewers || 0) +
-    (Number.isInteger(youtubeStream?.liveStreamingDetails?.concurrentViewers)
+    (isNumeric(youtubeStream?.liveStreamingDetails?.concurrentViewers)
       ? Number.parseInt(
           youtubeStream?.liveStreamingDetails?.concurrentViewers as string,
         )
