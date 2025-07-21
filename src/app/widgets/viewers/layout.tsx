@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Live Tally",
+  title: "Live Tally: Viewers Widget",
   description:
     "Display a counter for each of your streams, separate or combined.",
 };
