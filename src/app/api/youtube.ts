@@ -29,6 +29,8 @@ class YoutubeApi {
       console.info(`[YouTubeApi]: stream from channel '${videoId}' from cache`);
       return streamCache.stream;
     }
+    
+    console.info(`[YouTubeApi]: fetch stream from channel '${videoId}'`);
 
     const { data: response } = await this.apiClient.videos.list({
       part: ["liveStreamingDetails", "snippet"],

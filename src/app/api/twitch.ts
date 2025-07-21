@@ -53,6 +53,10 @@ class TwitchApi {
       );
       return streamCache.stream;
     }
+    
+    console.info(
+      `[TwitchApi]: fetch stream from channel '${channelName}'`,
+    );
 
     const stream = await user.getStream();
 

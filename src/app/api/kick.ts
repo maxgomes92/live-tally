@@ -69,8 +69,10 @@ class KickApi {
       console.info(`[KickApi]: stream from channel '${slug}' from cache`);
       return streamCache.stream;
     }
-
+    
     await this.checkCredentials();
+    
+    console.info(`[KickApi]: fetch stream from channel '${slug}'`);
 
     const { data: response } = await this.adapter.get<{
       data: KickChannel[];

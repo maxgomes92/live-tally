@@ -65,6 +65,8 @@ export default async function ViewersWidget({ searchParams }: Props) {
         )
       : 0);
 
+  console.log("[Widget]: Load Viewers", params);
+
   return (
     <main className="flex flex-row justify-between">
       {params.g === "1" ? (
