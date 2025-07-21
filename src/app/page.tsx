@@ -169,33 +169,54 @@ export default function HomePage() {
               </div>
 
               <div className="flex flex-row justify-between">
-                <TextField
-                  label="Kick Slug"
-                  variant="outlined"
-                  value={kickSlug}
-                  size="small"
-                  onChange={(event) => setKickSlug(event.target.value)}
-                />
+                <div className="flex flex-col gap-2 w-82">
+                  <TextField
+                    label="Kick Slug"
+                    variant="outlined"
+                    value={kickSlug}
+                    size="small"
+                    fullWidth
+                    onChange={(event) => setKickSlug(event.target.value)}
+                  />
+                  <span className="text-xs text-gray-50">
+                    Eg: https://kick.com/
+                    <span className="font-bold">gaules</span>
+                  </span>
+                </div>
 
-                <TextField
-                  label="Twitch Slug"
-                  variant="outlined"
-                  value={twitchSlug}
-                  size="small"
-                  onChange={(event) => setTwitchSlug(event.target.value)}
-                />
+                <div className="flex flex-col gap-2 w-82">
+                  <TextField
+                    label="Twitch Slug"
+                    variant="outlined"
+                    value={twitchSlug}
+                    size="small"
+                    fullWidth
+                    onChange={(event) => setTwitchSlug(event.target.value)}
+                  />
+                  <span className="text-xs text-gray-50">
+                    Eg: https://twitch.com/
+                    <span className="font-bold">gaules</span>
+                  </span>
+                </div>
 
-                <TextField
-                  label="YouTube Stream ID"
-                  variant="outlined"
-                  value={youtubeStreamId}
-                  size="small"
-                  onChange={(event) => setYoutubeStreamId(event.target.value)}
-                />
+                <div className="flex flex-col gap-2 w-82">
+                  <TextField
+                    label="YouTube Stream ID"
+                    variant="outlined"
+                    value={youtubeStreamId}
+                    size="small"
+                    fullWidth
+                    onChange={(event) => setYoutubeStreamId(event.target.value)}
+                  />
+                  <span className="text-xs text-gray-50">
+                    Eg: https://www.youtube.com/watch?v=
+                    <span className="font-bold">GQzoHropQgA</span>
+                  </span>
+                </div>
               </div>
 
-              <div className="mt-10 flex flex-row gap-2 items-center">
-                <div className="flex-grow shrink-0">
+              <div className="mt-10 flex flex-row items-center gap-2">
+                <div className="shrink-0 flex-grow">
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -207,7 +228,7 @@ export default function HomePage() {
                   />
                 </div>
 
-                <div className="flex-grow shrink-0">
+                <div className="shrink-0 flex-grow">
                   <InputLabel id="typography">Typography</InputLabel>
                   <Select
                     fullWidth
