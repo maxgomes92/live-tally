@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export function Footer() {
   return (
     <footer className="bg-gray-800 py-3 text-white shadow-lg">
@@ -20,8 +22,14 @@ export function Footer() {
             </a>
           </nav>
 
-          <div className="mt-4 text-center text-sm text-gray-400 md:mt-0">
+          <div className="mt-4 text-center text-sm text-gray-400 md:mt-0 flex-row flex gap-2">
             &copy; {new Date().getFullYear()} Max Gomes
+            <Image
+              src="/tribo-helmet.png"
+              alt="Capacete da Tribo"
+              width={281 / 10}
+              height={182 / 10}
+            />
           </div>
         </div>
       </div>
