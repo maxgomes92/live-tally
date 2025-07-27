@@ -107,6 +107,7 @@ export default function HomePage() {
               <Button
                 variant="contained"
                 color="success"
+                className="shrink-0"
                 onClick={copyWidgetUrlToClipboard}
               >
                 <span className="font-bold text-gray-50">Copy</span>
@@ -117,17 +118,16 @@ export default function HomePage() {
                 target="_blank"
                 color="success"
                 disabled={!isAnyStreamDefined}
+                className="shrink-0"
               >
                 <span className="pr-1 font-bold text-gray-50">Preview</span>
                 <OpenInNewIcon className="text-gray-50" />
               </Button>
             </div>
 
-            <div className="flex flex-col gap-6 bg-gray-600 p-4">
-              <div
-                className={`flex flex-row ${groupPlatforms ? "justify-center" : "justify-between"}`}
-              >
-                {groupPlatforms ? (
+            <div className="flex flex-col gap-4 bg-gray-600 p-4">
+              {groupPlatforms && (
+                <div className="flex flex-row justify-center">
                   <Counter
                     icon={
                       <PlatformsIconCombo
@@ -143,33 +143,23 @@ export default function HomePage() {
                     }
                     style={counterStyle}
                   />
-                ) : (
-                  <>
-                    <Counter
-                      icon={<Icons.kick width={ICON_SIZE} height={ICON_SIZE} />}
-                      viewers={mockViewers.kick}
-                      style={counterStyle}
-                    />
-                    <Counter
-                      icon={
-                        <Icons.twitch width={ICON_SIZE} height={ICON_SIZE} />
-                      }
-                      viewers={mockViewers.twitch}
-                      style={counterStyle}
-                    />
-                    <Counter
-                      icon={
-                        <Icons.youtube width={ICON_SIZE} height={ICON_SIZE} />
-                      }
-                      viewers={mockViewers.youtube}
-                      style={counterStyle}
-                    />
-                  </>
-                )}
-              </div>
+                </div>
+              )}
 
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-col gap-2 w-82">
+              <div className="flex flex-col items-center md:justify-between gap-4 md:flex-row">
+                <div className="flex flex-col gap-2 w-65">
+                  {!groupPlatforms && (
+                    <div className="m-auto">
+                      <Counter
+                        icon={
+                          <Icons.kick width={ICON_SIZE} height={ICON_SIZE} />
+                        }
+                        viewers={mockViewers.kick}
+                        style={counterStyle}
+                      />
+                    </div>
+                  )}
+
                   <TextField
                     label="Kick Slug"
                     variant="outlined"
@@ -179,12 +169,23 @@ export default function HomePage() {
                     onChange={(event) => setKickSlug(event.target.value)}
                   />
                   <span className="text-xs text-gray-50">
-                    Eg: https://kick.com/
+                    Eg: kick.com/
                     <span className="font-bold">gaules</span>
                   </span>
                 </div>
 
-                <div className="flex flex-col gap-2 w-82">
+                <div className="flex flex-col gap-2 w-65">
+                  {!groupPlatforms && (
+                    <div className="m-auto">
+                      <Counter
+                        icon={
+                          <Icons.twitch width={ICON_SIZE} height={ICON_SIZE} />
+                        }
+                        viewers={mockViewers.twitch}
+                        style={counterStyle}
+                      />
+                    </div>
+                  )}
                   <TextField
                     label="Twitch Slug"
                     variant="outlined"
@@ -194,28 +195,37 @@ export default function HomePage() {
                     onChange={(event) => setTwitchSlug(event.target.value)}
                   />
                   <span className="text-xs text-gray-50">
-                    Eg: https://twitch.com/
+                    Eg: twitch.com/
                     <span className="font-bold">gaules</span>
                   </span>
                 </div>
 
-                <div className="flex flex-col gap-2 w-82">
+                <div className="flex flex-col gap-2 w-65">
+                  {!groupPlatforms && (
+                    <div className="m-auto">
+                      <Counter
+                        icon={
+                          <Icons.youtube width={ICON_SIZE} height={ICON_SIZE} />
+                        }
+                        viewers={mockViewers.youtube}
+                        style={counterStyle}
+                      />
+                    </div>
+                  )}
                   <TextField
                     label="YouTube Stream ID"
                     variant="outlined"
                     value={youtubeStreamId}
                     size="small"
-                    fullWidth
                     onChange={(event) => setYoutubeStreamId(event.target.value)}
                   />
-                  <span className="text-xs text-gray-50">
-                    Eg: https://www.youtube.com/watch?v=
+                  <span className="text-xs text-gray-50 truncate">
+                    Eg: youtube.com/watch?v=
                     <span className="font-bold">GQzoHropQgA</span>
                   </span>
                 </div>
               </div>
-
-              <div className="mt-10 flex flex-row items-center gap-2">
+              <div className="mt-10 flex flex-row items-center">
                 <div className="shrink-0 flex-grow">
                   <FormControlLabel
                     control={
@@ -247,8 +257,7 @@ export default function HomePage() {
                   </Select>
                 </div>
               </div>
-
-              <div className="flex flex-row gap-20">
+              <div className="flex flex-col md:flex-row gap-4 md:gap-20">
                 <div className="flex flex-grow flex-row items-center gap-4">
                   <TextField
                     fullWidth
