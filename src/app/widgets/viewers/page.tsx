@@ -6,8 +6,6 @@ import { SearchParams } from "@/app/types";
 import { fontFamilyList, isNumeric } from "@/app/utils/constants";
 import { z } from "zod";
 
-const ICON_SIZE = 32;
-
 // http://localhost:3000/widgets/viewers?y=w1wx7riotD4&t=gaules&k=gaules&c=0101017f&f=russo%20one&g=1
 
 const paramsScheme = z.object({
@@ -85,21 +83,21 @@ export default async function ViewersWidget({ searchParams }: Props) {
         <>
           {params.k && (
             <Counter
-              icon={<Icons.kick width={ICON_SIZE} height={ICON_SIZE} />}
+              icon={<Icons.kick width={24} height={24} />}
               viewers={kickStream?.viewer_count || 0}
               style={counterStyle}
             />
           )}
           {params.t && (
             <Counter
-              icon={<Icons.twitch width={ICON_SIZE} height={ICON_SIZE} />}
+              icon={<Icons.twitch width={28} height={28} />}
               viewers={twitchStream?.viewers || 0}
               style={counterStyle}
             />
           )}
           {params.y && (
             <Counter
-              icon={<Icons.youtube width={ICON_SIZE} height={ICON_SIZE} />}
+              icon={<Icons.youtube width={32} height={32} />}
               viewers={
                 youtubeStream?.liveStreamingDetails?.concurrentViewers || 0
               }

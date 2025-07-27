@@ -149,10 +149,10 @@ export default function HomePage() {
               <div className="flex flex-col items-center md:justify-between gap-4 md:flex-row">
                 <div className="flex flex-col gap-2 w-65">
                   {!groupPlatforms && (
-                    <div className="m-auto">
+                    <div className="m-auto mb-2">
                       <Counter
                         icon={
-                          <Icons.kick width={ICON_SIZE} height={ICON_SIZE} />
+                          <Icons.kick width={24} height={24} />
                         }
                         viewers={mockViewers.kick}
                         style={counterStyle}
@@ -165,7 +165,6 @@ export default function HomePage() {
                     variant="outlined"
                     value={kickSlug}
                     size="small"
-                    fullWidth
                     onChange={(event) => setKickSlug(event.target.value)}
                   />
                   <span className="text-xs text-gray-50">
@@ -176,10 +175,10 @@ export default function HomePage() {
 
                 <div className="flex flex-col gap-2 w-65">
                   {!groupPlatforms && (
-                    <div className="m-auto">
+                    <div className="m-auto mb-2">
                       <Counter
                         icon={
-                          <Icons.twitch width={ICON_SIZE} height={ICON_SIZE} />
+                          <Icons.twitch width={28} height={28} />
                         }
                         viewers={mockViewers.twitch}
                         style={counterStyle}
@@ -191,7 +190,6 @@ export default function HomePage() {
                     variant="outlined"
                     value={twitchSlug}
                     size="small"
-                    fullWidth
                     onChange={(event) => setTwitchSlug(event.target.value)}
                   />
                   <span className="text-xs text-gray-50">
@@ -202,7 +200,7 @@ export default function HomePage() {
 
                 <div className="flex flex-col gap-2 w-65">
                   {!groupPlatforms && (
-                    <div className="m-auto">
+                    <div className="m-auto mb-2">
                       <Counter
                         icon={
                           <Icons.youtube width={ICON_SIZE} height={ICON_SIZE} />
